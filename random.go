@@ -37,7 +37,7 @@ func randomUniform(scale ...float32) float32{
 }
 
 /**
- *  generates random normal distributed variable in space [-1,1]
+ *  generates random normal distributed variable N(0,1)
  *  using Marsaglia polar method
  */
 func randomNormal() float32{
@@ -71,4 +71,5 @@ func main() {
     resultNormal := randomNormal()
     
     fmt.Println(resultNormal)
+
 }
