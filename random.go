@@ -19,7 +19,7 @@ import(
 )
 
 /**
- *  get generate random uniform variable in space [0,scale]
+ *  generates random uniform variable in space [0,scale]
  */
 func randomUniform(scale ...float32) float32{
     
@@ -36,11 +36,39 @@ func randomUniform(scale ...float32) float32{
 
 }
 
+/**
+ *  generates random normal distributed variable in space [-1,1]
+ *  using Marsaglia polar method
+ */
+func randomNormal() float32{
+
+    var v1 float32
+    var v2 float32
+    var v  float32
+
+    v = 2.00
+
+    for v>1 {
+        
+        v1 = 2*randomUniform()-1
+        v2 = 2*randomUniform()-1
+            
+        v =  v1*v1 + v2*v2
+    }
+
+    return (v1)*(float32(math.Pow(-2*math.Log(float64(v)),0.5)))
+
+}
+
 func main() {
 
     rand.Seed(time.Now().Unix())
     
-    result := randomUniform()
+    resultUniform := randomUniform()
     
-    fmt.Println(result)
+    fmt.Println(resultUniform)
+
+    resultNormal := randomNormal()
+    
+    fmt.Println(resultNormal)
 }
