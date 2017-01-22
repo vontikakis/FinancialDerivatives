@@ -60,7 +60,7 @@ func randomNormal() float64{
 }
 
 /** 
- * Montact carlo simulation for European Call Option
+ * Monte carlo simulation for European Call Option
  */
 func europeanCallOption(S, K, r, sigma, time float64, num_sims int) float64{
 
