@@ -2,6 +2,8 @@
  * Monte Carlo Simulation to value 
  * European Call Option Financial Derivatives
  * 
+ * https://en.wikipedia.org/wiki/Call_option
+ * 
  * @link https://www.vontikakis.com/
  * @copyright Copyright &copy; 2015-2017 Vasilis Vontikakis
  * @author Vasilis Vontikakis
@@ -36,7 +38,7 @@ func randomUniform(scale ...float64) float64{
 }
 
 /**
- *  generates random normal distributed variable N(0,1)
+ *  generates random normal distributed variables N(0,1)
  *  using Marsaglia polar method
  */
 func randomNormal() float64{
@@ -62,45 +64,40 @@ func randomNormal() float64{
 /** 
  * Monte carlo simulation for European Call Option
  */
-func europeanCallOption(S, K, r, sigma, time float64, num_sims int) float64{
+func europeanCallOption(S, K, r, sigma, time float64, numSims int) float64{
 
-    var S_T float64
+    var ST float64
 
     R := (r-0.05*math.Pow(sigma,2))*time
 
     SD := sigma * math.Sqrt(time)
 
-    sum_payoffs := 0.00
+    sumPayoffs := 0.00
     
-    for i := 0; i < num_sims; i++ {
+    for i := 0; i < numSims; i++ {
 
-        S_T = S * math.Exp(R+SD*randomNormal())
+        ST = S * math.Exp(R+SD*randomNormal())
 
-        sum_payoffs += math.Max(0.00, S_T-K)
+        sumPayoffs += math.Max(0.00, ST-K)
     }
 
-    average_payoff := sum_payoffs/float64(num_sims)
+    averagePayoff := sumPayoffs/float64(numSims)
 
-    discount_in_time_payoff := (math.Exp(-r*time))*average_payoff
+    discountInTimePayoff := (math.Exp(-r*time))*averagePayoff
 
-    return discount_in_time_payoff
+    return discountInTimePayoff
 }
 
 
 func main() {
 
     rand.Seed(time.Now().Unix())
-    
-    resultUniform := randomUniform()
-    
-    fmt.Println(resultUniform)
 
-    resultNormal := randomNormal()
-    
-    fmt.Println(resultNormal)
+    var stockPrice, strikePrice, riskFreeRate, sigma, durationTime float64 = 9.00, 10.00, 0.04, 0.3, 0.25
+    var numSimulations int = 10000
 
-    resultCallOption := europeanCallOption(9, 10, 0.04, 0.3, 0.25, 10000)
+    resultCallOption := europeanCallOption(stockPrice, strikePrice, riskFreeRate, sigma, durationTime, numSimulations)
     
-    fmt.Println(resultCallOption)
+    fmt.Println("European Call Option Price is ",resultCallOption)
 
 }
