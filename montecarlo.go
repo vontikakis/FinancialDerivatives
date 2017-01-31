@@ -5,7 +5,6 @@
  * https://en.wikipedia.org/wiki/Call_option
  * 
  * @link https://www.vontikakis.com/
- * @copyright Copyright &copy; 2015-2017 Vasilis Vontikakis
  * @author Vasilis Vontikakis
  * 
  */
@@ -73,8 +72,8 @@ func europeanCallOption(S, K, r, sigma, time float64, numSims int) float64{
     SD := sigma * math.Sqrt(time)
 
     sumPayoffs := 0.00
-    
-    for i := 0; i < numSims; i++ {
+
+    for i := 1; i < numSims; i++ {
 
         ST = S * math.Exp(R+SD*randomNormal())
 
@@ -93,8 +92,8 @@ func main() {
 
     rand.Seed(time.Now().Unix())
 
-    var stockPrice, strikePrice, riskFreeRate, sigma, durationTime float64 = 9.00, 10.00, 0.04, 0.3, 0.25
-    var numSimulations int = 10000
+    var stockPrice, strikePrice, riskFreeRate, sigma, durationTime float64 = 9.00, 10.00, 0.10, 0.25, 1.00
+    var numSimulations int = 5000
 
     resultCallOption := europeanCallOption(stockPrice, strikePrice, riskFreeRate, sigma, durationTime, numSimulations)
     
